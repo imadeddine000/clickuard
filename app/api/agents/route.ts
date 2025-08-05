@@ -13,10 +13,11 @@ export async function GET() {
       },
       httpsAgent: new https.Agent(
                 { 
-                rejectUnauthorized: false
-               }
-              ),
+                  rejectUnauthorized: false
+                }
+      ),
     });
+    
     const result = await response.data
     return NextResponse.json(result)
   } catch (error) {

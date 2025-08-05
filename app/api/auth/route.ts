@@ -32,7 +32,7 @@ export  async function GET() {
       sameSite:'strict',
       path:'/'
     })
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, token: data});
   } catch (error) {
     return NextResponse.json({ error });
   }
