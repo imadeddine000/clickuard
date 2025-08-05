@@ -26,7 +26,16 @@ import {
   SidebarGroupLabel,
   SidebarGroupContent,
   SidebarRail,
+  
+  SidebarMenuSub,
+  SidebarMenuSubItem,
+  
 } from "@/components/ui/sidebar"
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 
@@ -95,7 +104,9 @@ export function AppSidebar() {
             </SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
+               
                 {section.items.map((item) => (
+
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton asChild className="w-full justify-start">
                       <a href={item.url} className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent">
@@ -109,11 +120,13 @@ export function AppSidebar() {
                       </a>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
+
                 ))}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
         ))}
+        
       </SidebarContent>
 
       <SidebarFooter className="border-t p-4">
