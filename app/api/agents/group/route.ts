@@ -1,14 +1,15 @@
-import Axios from "@/lib/Axios";
-import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
+import axios from "axios";
+import { cookies, headers } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
 
-// app/api/agents/route.js
+import Axios from "@/lib/Axios";
 export async function GET() {
   try {
     const cookieStore = cookies();
-    const token = cookieStore.get("token")?.value;
+    const token = (await cookieStore).get("token")?.value;
+    console.log("TOKEN ISJ: ", token);
 
-    const response = await Axios.get("/agents", {
+    const response = await Axios.get("/groups", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -21,20 +22,21 @@ export async function GET() {
   }
 }
 
-export async function POST(request) {
+// app/api/agents/group/route.js
+export async function PUT(request) {
   try {
     const cookieStore = cookies();
     const token = cookieStore.get("token")?.value;
-    const { force_time, ip, name } = await request.json();
+    const { agents_list, group_id, force_single_group } = await request.json();
 
-    const response = await Axios.post("/agents", {
+    const response = await Axios.put("/agents/group", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      data: {
-        force_time,
-        ip,
-        name
+      params: {
+        agents_list,
+        group_id,
+        force_single_group
       }
     });
 
@@ -49,18 +51,15 @@ export async function DELETE(request) {
   try {
     const cookieStore = cookies();
     const token = cookieStore.get("token")?.value;
-    const { agents_list, purge, status, older_than, q } = await request.json();
+    const { agents_list, group_id } = await request.json();
 
-    const response = await Axios.delete("/agents", {
+    const response = await Axios.delete("/agents/group", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
       params: {
         agents_list,
-        purge,
-        status,
-        older_than,
-        q
+        group_id
       }
     });
 

@@ -1,18 +1,18 @@
+// app/api/agents/[agent_id]/restart/route.js
 import axios from "axios";
 import { cookies, headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-import Axios from "@/lib/Axios";
-export async function GET() {
+export async function PUT(request, { params }) {
   try {
     const cookieStore = cookies();
-    const token = (await cookieStore).get("token")?.value;
-    console.log("TOKEN ISJ: ", token);
+    const token = cookieStore.get("token")?.value;
+    const { agent_id } = params;
 
-    const response = await Axios.get("/groups", {
+    const response = await Axios.put(`/agents/${agent_id}/restart`, {
       headers: {
         Authorization: `Bearer ${token}`,
-      },
+      }
     });
 
     const result = await response.data;
