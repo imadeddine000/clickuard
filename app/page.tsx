@@ -27,16 +27,14 @@ export default function Page() {
   }
 
 return (
-  <SidebarProvider defaultOpen={true}>
-    <AppSidebar />
-    <SidebarInset>
-      <TopNav />
+  <div>
+    
       <main className="flex-1 p-6 bg-gray-50">
         <Button onClick={() => handleLogin()}>test login</Button>
         <Button onClick={() => handleAuth()}>Test Auth</Button>
         <Dashboard />
       </main>
-    </SidebarInset>
-  </SidebarProvider>
+    
+  </div>
 )
 }

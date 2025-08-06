@@ -1,6 +1,6 @@
 import axios from 'axios'
 import https from 'https'
-import { cookies } from 'next/headers';
+
 const Axios = axios.create({
     baseURL:'https://101.44.39.177:55000',
     httpsAgent: new https.Agent({ rejectUnauthorized: false }),

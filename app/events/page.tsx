@@ -5,14 +5,12 @@ import { SecurityEvents } from "@/components/security-events"
 
 export default function EventsPage() {
   return (
-    <SidebarProvider defaultOpen={true}>
-      <AppSidebar />
-      <SidebarInset>
-        <TopNav />
+    <div >
+     
         <main className="flex-1 p-6 bg-gray-50">
           <SecurityEvents />
         </main>
-      </SidebarInset>
-    </SidebarProvider>
+      
+    </div>
   )
 }

@@ -1,24 +1,53 @@
 import axios from "axios";
 import { cookies, headers } from "next/headers";
-import { NextResponse } from "next/server";
-import https from 'https'
+import { NextRequest, NextResponse } from "next/server";
+
 import Axios from "@/lib/Axios";
 export async function GET() {
   try {
     const cookieStore = cookies();
     const token = (await cookieStore).get("token")?.value;
     console.log("TOKEN ISJ: ", token);
-    
-    
-    const response = await Axios.get("/agents",{
-       headers: {
-         Authorization: `Bearer ${token}`,
+
+    const response = await Axios.get("/agents", {
+      headers: {
+        Authorization: `Bearer ${token}`,
       },
-    })
-    
-    const result = await response.data
-    return NextResponse.json(result)
+    });
+
+    const result = await response.data;
+    return NextResponse.json(result);
   } catch (error) {
-    return NextResponse.json(error)
+    return NextResponse.json(error);
   }
+}
+
+export async function DELETE(request:Request) {
+  try {
+    const params = await request.json()
+    const cookieStore = cookies();
+    const token = (await cookieStore).get("token")?.value;
+    console.log("TOKEN ISJ: ", token);
+
+    const response = await Axios.delete("/agents", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        ...params
+      },
+    });
+  } catch (error) {
+    return NextResponse.json(error);
+  }
+}
+
+export async function PUT() {
+  const cookieStore = cookies();
+  const token = (await cookieStore).get("token")?.value;
+  console.log("TOKEN ISJ: ", token);
+
+  const response = await Axios.put("/agents", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 }
