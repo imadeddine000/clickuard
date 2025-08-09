@@ -105,7 +105,7 @@ export default function Page() {
   const [searchTerm, setSearchTerm] = useState("")
   const [statusFilter, setStatusFilter] = useState("all")
   const [groupFilter, setGroupFilter] = useState("all")
-   const{data,error,isLoading} = useSWR("/api/agents/groups",fetcher)
+   const{data,error,isLoading} = useSWR("/api/agents/group",fetcher)
   const filteredAgents = data?.data?.affected_items?.filter((agent) => {
     const matchesSearch =
       agent.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -167,20 +167,7 @@ export default function Page() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        {agentStats.map((stat) => (
-          <Card key={stat.label}>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">{stat.label}</CardTitle>
-              <stat.icon className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stat.value}</div>
-              <p className="text-xs text-muted-foreground">{stat.change} from last hour</p>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      
 
       {/* Filters */}
       <Card>

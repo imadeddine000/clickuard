@@ -31,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter} antialiased`}>
+      <body className={inter.className}>
         <SidebarProvider defaultOpen={true}>
           <AppSidebar />
           <SidebarInset>

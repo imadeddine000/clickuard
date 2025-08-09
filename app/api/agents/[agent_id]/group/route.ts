@@ -1,13 +1,13 @@
-// app/api/agents/[agent_id]/group/route.js
-import axios from "axios";
+
+import Axios from "@/lib/Axios";
 import { cookies, headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 
 export async function DELETE(request, { params }) {
   try {
-    const cookieStore = cookies();
-    const token = cookieStore.get("token")?.value;
+    const cookieStore = await cookies();
+    const token =  cookieStore.get("token")?.value;
     const { agent_id } = params;
     const { groups_list } = await request.json();
 

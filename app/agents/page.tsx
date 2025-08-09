@@ -25,74 +25,10 @@ import {
 } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { fetcher } from "@/lib/fetcher"
+import axios from "axios"
 
-const agents = [
-  {
-    id: "001",
-    name: "web-server-01",
-    ip: "192.168.1.10",
-    os: "Ubuntu 20.04",
-    version: "4.7.0",
-    status: "Active",
-    lastSeen: "2 minutes ago",
-    group: "Web Servers",
-    cpu: 45,
-    memory: 67,
-    disk: 23,
-  },
-  {
-    id: "002",
-    name: "db-server-01",
-    ip: "192.168.1.20",
-    os: "CentOS 8",
-    version: "4.7.0",
-    status: "Active",
-    lastSeen: "1 minute ago",
-    group: "Database",
-    cpu: 78,
-    memory: 82,
-    disk: 56,
-  },
-  {
-    id: "003",
-    name: "endpoint-15",
-    ip: "10.0.0.45",
-    os: "Windows 10",
-    version: "4.6.2",
-    status: "Disconnected",
-    lastSeen: "2 hours ago",
-    group: "Endpoints",
-    cpu: 0,
-    memory: 0,
-    disk: 0,
-  },
-  {
-    id: "004",
-    name: "firewall-01",
-    ip: "192.168.1.1",
-    os: "pfSense",
-    version: "4.7.0",
-    status: "Active",
-    lastSeen: "30 seconds ago",
-    group: "Network",
-    cpu: 12,
-    memory: 34,
-    disk: 15,
-  },
-  {
-    id: "005",
-    name: "mail-server-01",
-    ip: "192.168.1.30",
-    os: "Debian 11",
-    version: "4.7.0",
-    status: "Warning",
-    lastSeen: "5 minutes ago",
-    group: "Mail Servers",
-    cpu: 89,
-    memory: 91,
-    disk: 78,
-  },
-]
+
+
 
 const agentStats = [
   { label: "Total Agents", value: "156", change: "+3", icon: Monitor },
@@ -116,7 +52,15 @@ export default function Page() {
 
     return matchesSearch && matchesStatus && matchesGroup
   })
-
+  const handleRestartAgent=async(agent)=>{
+      const res = await axios.put('/api/agents/restart',{
+        headers:{
+          agents_list:[agent]
+        }
+      })
+      const result = res.data
+      console.log(result)
+  }
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
       case "active":
@@ -231,7 +175,7 @@ export default function Page() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Monitor className="h-5 w-5" />
-            Agents ({filteredAgents.length})
+            Agents ({filteredAgents?.length})
           </CardTitle>
           <CardDescription>Detailed view of all registered Wazuh agents</CardDescription>
         </CardHeader>
@@ -308,7 +252,7 @@ export default function Page() {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                           <DropdownMenuItem>View Details</DropdownMenuItem>
-                          <DropdownMenuItem>Restart Agent</DropdownMenuItem>
+                          <DropdownMenuItem onClick={()=>handleRestartAgent(agent.id)}>Restart Agent</DropdownMenuItem>
                           <DropdownMenuItem>Update Configuration</DropdownMenuItem>
                           <DropdownMenuItem className="text-red-600">Remove Agent</DropdownMenuItem>
                         </DropdownMenuContent>

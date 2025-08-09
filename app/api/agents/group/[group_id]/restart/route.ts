@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 // app/api/agents/group/[group_id]/restart/route.js
 export async function PUT(request, { params }) {
   try {
-    const cookieStore = cookies();
+    const cookieStore = await  cookies();
     const token = cookieStore.get("token")?.value;
     const { group_id } = params;
 
